@@ -7,10 +7,10 @@ orders AS (SELECT * FROM `analytics-engineers-club.coffee_shop.orders`),
 final AS 
 ( 
     SELECT 
-        customer_id
-        , name
-        , email
-        , MIN(created_at) AS first_order_at
+        customers.customer_id AS customer_id
+        , customers.name AS name
+        , customers.email AS email
+        , MIN(orders.created_at) AS first_order_at
         , COUNT(*) AS number_of_orders 
     FROM 
         customers 
