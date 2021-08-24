@@ -20,7 +20,11 @@ final AS
         customers.id = orders.customer_id
     GROUP BY 1, 2, 3
     ORDER BY first_order_at
+<<<<<<< HEAD
     LIMIT 15
+=======
+    LIMIT 10
+>>>>>>> 659f1cb... limit to 10
 )
 
 SELECT * FROM final
