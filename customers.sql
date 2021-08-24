@@ -20,7 +20,7 @@ final AS
         customers.id = orders.customer_id
     GROUP BY 1, 2, 3
     ORDER BY first_order_at
-    LIMIT 5
+    LIMIT 15
 )
 
 SELECT * FROM final
