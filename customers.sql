@@ -13,11 +13,11 @@ final AS
         , MIN(orders.created_at) AS first_order_at
         , COUNT(*) AS number_of_orders
     FROM 
-        customers AS c
+        customers 
     JOIN 
-        orders AS co
+        orders 
     ON 
-        c.id = co.customer_id
+        customers.id = orders.customer_id
     GROUP BY 1, 2, 3
     ORDER BY first_order_at
     LIMIT 5
