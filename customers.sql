@@ -1,26 +1,28 @@
 WITH 
 
-customers AS (SELECT * FROM `analytics-engineers-club.coffee_shop.customers`),
-
-orders AS (SELECT * FROM `analytics-engineers-club.coffee_shop.orders`),
-
-final AS 
-( 
+customer_orders AS (
     SELECT 
-        customers.customer_id AS customer_id
+        customer_id
+        , COUNT(*) AS number_of_orders
+        , MIN(created_at) AS first_order
+        , SUM(total) AS total_order_value
+    FROM 
+        `analytics-engineers-club.coffee_shop.orders`
+    GROUP BY 1
+),
+
+final AS (
+    SELECT 
+        customers.id AS customer_id
         , customers.name AS customer_name
         , customers.email AS customer_email
-        , MIN(orders.created_at) AS first_order_at
-        , COUNT(*) AS number_of_orders
-    FROM 
-        customers 
-    JOIN 
-        orders 
-    ON 
-        customers.id = orders.customer_id
-    GROUP BY 1, 2, 3
-    ORDER BY first_order_at
-    LIMIT 15
+        , customer_orders.number_of_orders
+        , customer_orders.first_order
+        , customer_orders.total_order_value
+    FROM
+        `analytics-engineers-club.coffee_shop.customers` AS customers
+    JOIN customer_orders 
+        ON customers.id = customer_orders.customer_id
 )
 
 SELECT * FROM final
